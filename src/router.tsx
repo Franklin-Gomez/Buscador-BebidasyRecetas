@@ -10,7 +10,7 @@ export default function AppRouter() {
                 <Route element={<Layouts/>}>
                     {/* index indicia que es pagina principal */}
                     <Route path='/' element={<IndexPage />} index /> 
-                    <Route path='/favorite' element={<FavoritePage />} />
+                    <Route path='/favoritos' element={<FavoritePage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
