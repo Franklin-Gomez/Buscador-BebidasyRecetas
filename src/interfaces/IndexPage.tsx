@@ -2,7 +2,7 @@
 export default function IndexPage() {
     return (
         <>
-            <h1> desde Header</h1>
+            <h1> desde Index Page</h1>
         </>
     )
 }
