@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CategoriesAPIRsponseSchema } from "../utils/recipes-schema";
+import { CategoriesAPIRsponseSchema , DrinksAPIReponseSchema } from "../utils/recipes-schema";
 import { SearchFilter } from "../Types";
 
 export async function getCategories () { 
@@ -10,7 +10,7 @@ export async function getCategories () {
 
         const {data}  = await axios(url)
         const resultado = CategoriesAPIRsponseSchema.safeParse(data)
-        
+
         if( resultado.success) { 
             return resultado.data
         }
@@ -28,12 +28,11 @@ export async function getRecipes ( searchFilters : SearchFilter ) {
     try {
 
         const {data}  = await axios(url)
+        const resultado = DrinksAPIReponseSchema.safeParse(data)
         
-        console.log( data )
-        
-        // if( resultado.success) { 
-        //     return resultado.data
-        // }
+        if( resultado.success) { 
+            return resultado.data
+        }
 
     } catch (error) {
         console.log( error )
