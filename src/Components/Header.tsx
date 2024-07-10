@@ -1,11 +1,17 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo , useState } from "react";
 import { NavLink } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import { useAppStore } from "../stores/useAppStore";
 
 export default function Header() {
 
-    const {pathname } = useLocation();
+
+    const [ searchFilters , setSearchFilters ] = useState({
+        ingredient : '',
+        category : ''
+    })
+
+    const { pathname } = useLocation();
 
     const isHome = useMemo(() => pathname === '/' , [pathname] )
 
@@ -13,6 +19,21 @@ export default function Header() {
     const categories = useAppStore((state) => state.categories)
 
     useEffect(() => { fetchCategories() } , [])
+
+    const handleChange = ( e : React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => { 
+        setSearchFilters({
+            ...searchFilters,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    const handleSubmit = () => { 
+        if( Object.values( searchFilters ).includes('') ) { 
+        
+        }
+    }
+
+
     
 
     return (
@@ -51,11 +72,13 @@ export default function Header() {
                             > Nombre o Ingredientes</label>
 
                             <input 
-                                id="ingredient"
+                                id="ingredient" 
                                 name="ingredient"
                                 className="p-3 w-full rounded-full focus:outline-none"
                                 placeholder="Nombre o Ingrediente. Ej. Vodka, Tequila, Cafe"
                                 type="text"
+                                onChange={ handleChange }
+                                value={searchFilters.ingredient}
                             />
                         </div>
 
@@ -70,6 +93,8 @@ export default function Header() {
                                 id="category"
                                 name="category"
                                 className="p-3 w-full rounded-full focus:outline-none"
+                                onChange={ handleChange }
+                                value={ searchFilters.category }
                                 
                             > 
                                 <option value=""> -- Selecciona una Categoria -- </option>
@@ -77,7 +102,7 @@ export default function Header() {
                                 { categories.drinks.map (( category ) => ( 
 
                                     <option 
-                                    
+
                                         value={category.strCategory}
                                         key={category.strCategory}
                                     
