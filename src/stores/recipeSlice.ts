@@ -1,10 +1,11 @@
 import { StateCreator } from "zustand"
-import { getCategories } from "../API/RecipeService"
-import { Categories } from "../Types"
+import { getCategories, getRecipes } from "../API/RecipeService"
+import { Categories, SearchFilter } from "../Types"
 
 export type createRecipesSliceProps = { 
     categories : Categories
     fetchCategories: () => Promise<void>
+    searchRecipes: ( searchFilters : SearchFilter) => Promise<void>
 }
 
 // store de las recetas
@@ -20,5 +21,9 @@ export const createRecipesSlice : StateCreator<createRecipesSliceProps> = (set) 
             categories : categorias
         })
 
+    }, 
+
+    searchRecipes : async ( searchFilters ) => { 
+       await getRecipes( searchFilters )
     }
 })

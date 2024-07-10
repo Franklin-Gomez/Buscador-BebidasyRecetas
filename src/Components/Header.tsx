@@ -2,11 +2,12 @@ import { useEffect, useMemo , useState } from "react";
 import { NavLink } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import { useAppStore } from "../stores/useAppStore";
+import { SearchFilter } from "../Types";
 
 export default function Header() {
 
-
-    const [ searchFilters , setSearchFilters ] = useState({
+    // state formulario
+    const [ searchFilters , setSearchFilters ] = useState <SearchFilter>({
         ingredient : '',
         category : ''
     })
@@ -16,6 +17,7 @@ export default function Header() {
     const isHome = useMemo(() => pathname === '/' , [pathname] )
 
     const fetchCategories = useAppStore((state) => state.fetchCategories)
+    const searchRecipes = useAppStore((state) => state.searchRecipes)
     const categories = useAppStore((state) => state.categories)
 
     useEffect(() => { fetchCategories() } , [])
@@ -27,14 +29,20 @@ export default function Header() {
         })
     }
 
-    const handleSubmit = () => { 
+    const handleSubmit = ( e: React.FormEvent<HTMLFormElement> ) => { 
+
+        e.preventDefault();
+
+        // validar
         if( Object.values( searchFilters ).includes('') ) { 
-        
+            console.log('llena esa monda')
+            return;
         }
+
+        // buscar receta
+        searchRecipes( searchFilters )
+
     }
-
-
-    
 
     return (
         <header className={isHome ? " bg-header bg-cover bg-center" : " bg-slate-800"  }>
@@ -62,7 +70,10 @@ export default function Header() {
                 { isHome && 
                     <form 
                         action="" 
-                        className="mt-10  md:w-1/2 2xl:w-1/3 bg-orange-500 p-10 rounded-lg shadow space-y-6">
+                        className="mt-10  md:w-1/2 2xl:w-1/3 bg-orange-500 p-10 rounded-lg shadow space-y-6"
+                        onSubmit={ handleSubmit }
+                    >
+                        
 
                         <div className="space-y-2">
                             <label 
