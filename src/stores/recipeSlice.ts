@@ -1,10 +1,11 @@
 import { StateCreator } from "zustand"
 import { getCategories, getRecipeById, getRecipes } from "../API/RecipeService"
-import { Categories, SearchFilter , DrinkApiResponse } from "../Types"
+import { Categories, SearchFilter , DrinkApiResponse, RecipeAPIResponse } from "../Types"
 
 export type createRecipesSliceProps = { 
     categories : Categories
     drinks : DrinkApiResponse[]
+    selectedRcipe : RecipeAPIResponse
     fetchCategories: () => Promise<void>
     searchRecipes: ( searchFilters : SearchFilter) => Promise<void>
     selectRecipe : ( id : DrinkApiResponse['idDrink']) => Promise<void>
@@ -18,6 +19,8 @@ export const createRecipesSlice : StateCreator<createRecipesSliceProps> = (set) 
 
     drinks : []  ,
 
+    selectedRcipe : {} as RecipeAPIResponse ,
+
     fetchCategories : async () => { 
         const categorias = await getCategories();
         
@@ -30,14 +33,18 @@ export const createRecipesSlice : StateCreator<createRecipesSliceProps> = (set) 
     searchRecipes : async ( searchFilters ) => { 
        const data = await getRecipes( searchFilters )
 
-       set({
+        set({
             drinks : data?.drinks
-       })
+        })
 
     },
 
     selectRecipe : async  ( id ) => { 
         const selectRecipe = await getRecipeById( id )
-        console.log( selectRecipe )
+        
+        set({ 
+            selectedRcipe : selectRecipe
+        })
+
     }
 })

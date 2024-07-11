@@ -11,4 +11,4 @@ export type DrinkApiResponse = z.infer< typeof DrinkApiResponseSchema >
 
 export type DrinksApiResponse = z.infer< typeof DrinksAPIReponseSchema >
 
-export type RecipeAPIResponseSchema = z.infer< typeof RecipeAPIResponseSchema >
+export type RecipeAPIResponse = z.infer< typeof RecipeAPIResponseSchema >
