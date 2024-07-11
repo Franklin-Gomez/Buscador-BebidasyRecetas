@@ -7,6 +7,7 @@ export type createRecipesSliceProps = {
     drinks : DrinkApiResponse[]
     fetchCategories: () => Promise<void>
     searchRecipes: ( searchFilters : SearchFilter) => Promise<void>
+    selectRecipe : ( id : DrinkApiResponse['idDrink']) => Promise<void>
 }
 
 // store de las recetas
@@ -33,5 +34,10 @@ export const createRecipesSlice : StateCreator<createRecipesSliceProps> = (set) 
             drinks : data?.drinks
        })
 
+    },
+
+    selectRecipe : async  ( id ) => { 
+
+        console.log( id )
     }
 })
