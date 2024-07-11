@@ -5,7 +5,7 @@ import { Categories, SearchFilter , DrinkApiResponse, RecipeAPIResponse } from "
 export type createRecipesSliceProps = { 
     categories : Categories
     drinks : DrinkApiResponse[]
-    selectedRcipe : RecipeAPIResponse
+    selectedRecipe : RecipeAPIResponse
     modal : boolean
     fetchCategories: () => Promise<void>
     searchRecipes: ( searchFilters : SearchFilter) => Promise<void>
@@ -21,7 +21,7 @@ export const createRecipesSlice : StateCreator<createRecipesSliceProps> = (set) 
 
     drinks : []  ,
 
-    selectedRcipe : {} as RecipeAPIResponse ,
+    selectedRecipe : {} as RecipeAPIResponse ,
 
     modal : false , 
 
@@ -47,7 +47,7 @@ export const createRecipesSlice : StateCreator<createRecipesSliceProps> = (set) 
         const selectRecipe = await getRecipeById( id )
         
         set({ 
-            selectedRcipe : selectRecipe,
+            selectedRecipe : selectRecipe,
             modal : true
         })
 
@@ -56,7 +56,7 @@ export const createRecipesSlice : StateCreator<createRecipesSliceProps> = (set) 
     closeModal : () => { 
         set({
             modal : false,
-            selectedRcipe: {} as RecipeAPIResponse
+            selectedRecipe: {} as RecipeAPIResponse
         })
     }
 })
