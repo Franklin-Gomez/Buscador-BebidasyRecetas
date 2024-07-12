@@ -20,6 +20,8 @@ export default function Header() {
     const searchRecipes = useAppStore((state) => state.searchRecipes)
     const categories = useAppStore((state) => state.categories)
 
+    const showNotification = useAppStore((state) => state.showNotification)
+
     useEffect(() => { fetchCategories() } , [])
 
     const handleChange = ( e : React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => { 
@@ -35,7 +37,10 @@ export default function Header() {
 
         // validar
         if( Object.values( searchFilters ).includes('') ) { 
-            console.log('llena esa monda')
+            showNotification({ 
+                text : 'llena esa monda',
+                error : true
+            })
             return;
         }
 
