@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand"
 import { RecipeAPIResponse } from "../Types"
+import { createRecipesSlice, createRecipesSliceProps } from "./recipeSlice"
 
 export type createFavoriteType = { 
     favorites : RecipeAPIResponse[]
@@ -7,7 +8,7 @@ export type createFavoriteType = {
     favoriteExists : ( id : RecipeAPIResponse['idDrink'] ) => boolean
 }
 
-export const createFavoriteSlice : StateCreator<createFavoriteType> = ( set , get ) => ({ 
+export const createFavoriteSlice : StateCreator<createFavoriteType & createRecipesSliceProps , [] , [] , createFavoriteType > = ( set , get , api) => ({ 
     favorites : [] , 
 
     handleClickFavorite : ( recipe ) =>  { 
@@ -28,6 +29,8 @@ export const createFavoriteSlice : StateCreator<createFavoriteType> = ( set , ge
                 favorites : [ ...state.favorites , recipe]
             }))
         }
+
+        createRecipesSlice( set , get , api).closeModal()
     },
 
     favoriteExists : ( id ) => { 
