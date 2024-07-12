@@ -4,6 +4,7 @@ import { RecipeAPIResponse } from "../Types"
 export type createFavoriteType = { 
     favorites : RecipeAPIResponse[]
     handleClickFavorite : ( recipe : RecipeAPIResponse ) => void
+    favoriteExists : ( id : RecipeAPIResponse['idDrink'] ) => boolean
 }
 
 export const createFavoriteSlice : StateCreator<createFavoriteType> = ( set , get ) => ({ 
@@ -11,7 +12,7 @@ export const createFavoriteSlice : StateCreator<createFavoriteType> = ( set , ge
 
     handleClickFavorite : ( recipe ) =>  { 
         
-        if( get().favorites.some((favorite) => favorite.idDrink == recipe.idDrink )){
+        if( get().favoriteExists(recipe.idDrink) ){
 
             set(( state) => ({ 
                 favorites : state.favorites.filter(( favorite) => favorite.idDrink !== recipe.idDrink)
@@ -27,5 +28,9 @@ export const createFavoriteSlice : StateCreator<createFavoriteType> = ( set , ge
                 favorites : [ ...state.favorites , recipe]
             }))
         }
+    },
+
+    favoriteExists : ( id ) => { 
+        return  get().favorites.some((favorite) => favorite.idDrink == id)
     }
 })
