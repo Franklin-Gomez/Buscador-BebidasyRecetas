@@ -47,7 +47,6 @@ export async function getRecipeById ( id : DrinkApiResponse['idDrink']) {
 
         const {data}  = await axios(url)
         const resultado = RecipeAPIResponseSchema.safeParse(data.drinks[0])
-        console.log( resultado )
         
         if( resultado.success) { 
             return resultado.data
