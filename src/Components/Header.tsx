@@ -2,17 +2,40 @@ import { NavLink } from "react-router-dom"
 
 export default function Header() {
     return (
-        <div>
-            <div>
+        <>
+            <header className=" bg-bg-header">
 
-            </div>
+                <div className=" container mx-auto">
 
-            <div>
+                    {/* header */}
+                    <div className=" flex justify-between items-center">
+                
+                        <img 
+                            src="../public/logo.svg" 
+                            alt="imagen Logo"  
+                            className="w-32"
+                        />
+                
 
-                <NavLink to="/"> INICIO </NavLink>
-                <NavLink to="/favoritos"> FAVORITOS </NavLink>
-            
-            </div>
-        </div>
+                        <div className=" flex gap-10">
+
+                            <NavLink to="/"> INICIO </NavLink>
+                            <NavLink to="/favoritos"> FAVORITOS </NavLink>
+                        
+                        </div>
+                    </div>
+
+                    {/* form */}
+
+                    <form action="">
+
+                    </form>
+                </div>
+
+            </header>
+
+        
+        </>
+
     )
 }

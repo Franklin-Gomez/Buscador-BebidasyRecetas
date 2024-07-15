@@ -3,12 +3,17 @@ import Header from "./Header";
 
 export default function Layout() {
     return (
-        <div>
-            
+        
+        <>
+
             <Header/>
 
-            <Outlet/>
+            <main className="container mx-auto py-16 bg-red-200">
+                
+                <Outlet/>
 
-        </div>
+            </main>
+        </>
+
     )
 }
