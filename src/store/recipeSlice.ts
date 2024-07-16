@@ -1,10 +1,11 @@
 import { StateCreator } from 'zustand'
 import { fetchCategory } from '../API/RecipeService'
-import { CategoriesAPISchemaType } from '../Types'
+import { CategoriesAPISchemaType , drinkType } from '../Types'
 
 export type recipeSliceType = {
-    category : CategoriesAPISchemaType,
+    category : CategoriesAPISchemaType
     getCategory: () => void
+    getDrinks : ( drinks : drinkType) => void
 }
 
 export const recipeSlice : StateCreator<recipeSliceType> = (set) => ({ 
@@ -19,5 +20,10 @@ export const recipeSlice : StateCreator<recipeSliceType> = (set) => ({
             category : drinks
         })
        
+    },
+
+    getDrinks : async ( drinks ) => { 
+       
     }
+
 })

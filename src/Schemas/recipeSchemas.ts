@@ -12,3 +12,9 @@ export const CategoryAPISchema = z.object({
     drinks : CategoriesAPISchema
 })
 
+//state de drinks
+export const drinksSchema = z.object({ 
+    Ingredient : z.string(),
+    category : z.string()
+})
+
