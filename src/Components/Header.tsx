@@ -5,12 +5,16 @@ import { useEffect } from "react"
 
 export default function Header() {
 
-    const category = useAppStore((state) => state.getCategory )
+    const getCategory = useAppStore((state) => state.getCategory )
+    const category = useAppStore((state) => state.category)
 
-    useEffect(() => { 
-        category()
+    useEffect(() => {
+        getCategory()
     },[])
-    
+
+    console.log( category )
+
+
     return (
         <>
             <header className=" bg-bg-header bg-center bg-no-repeat bg-cover">

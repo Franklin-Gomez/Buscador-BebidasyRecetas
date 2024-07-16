@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CategoryAPISchema } from "../Schemas/recipeSchemas"
+import { CategoriesAPISchema, CategoryAPISchema } from "../Schemas/recipeSchemas"
 
 
 export const fetchCategory = async () => { 
@@ -9,6 +9,7 @@ export const fetchCategory = async () => {
     try {
         
         const {data} = await axios(url)
+        console.log( data )
         const resultado = CategoryAPISchema.safeParse(data)
         
         if( resultado.success ) { 
