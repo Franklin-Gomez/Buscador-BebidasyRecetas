@@ -1,6 +1,16 @@
 import { NavLink } from "react-router-dom"
+import { useAppStore } from "../store/useAppStore"
+import { useEffect } from "react"
+
 
 export default function Header() {
+
+    const category = useAppStore((state) => state.getCategory )
+
+    useEffect(() => { 
+        category()
+    },[])
+    
     return (
         <>
             <header className=" bg-bg-header bg-center bg-no-repeat bg-cover">
