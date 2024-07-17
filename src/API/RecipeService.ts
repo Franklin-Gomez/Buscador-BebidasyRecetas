@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CategoryAPISchema, searchdrinksSchema } from "../Schemas/recipeSchemas"
+import { CategoryAPISchema, drinkdetailSchema, searchdrinksSchema } from "../Schemas/recipeSchemas"
 import { drinkType } from "../Types"
 
 
@@ -30,7 +30,6 @@ export const fetchDrink = async ( drinks : drinkType) => {
     try {
 
         const { data } = await axios( url )
-        console.log( data)
         const resultado = searchdrinksSchema.safeParse( data )
 
         if( resultado.success ) { 
@@ -41,4 +40,22 @@ export const fetchDrink = async ( drinks : drinkType) => {
         console.log( error )
     }
 
+}
+
+export const fetchDrinkInfo = async ( id : string ) => { 
+
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
+
+    try {
+        
+        const {data}  = await axios ( url )
+        const resultado = drinkdetailSchema.safeParse( data.drinks[0])
+        
+        if( resultado.success ) { 
+            return resultado.data
+        }
+
+    } catch (error) {
+        console.log( error )
+    }
 }
