@@ -11,8 +11,8 @@ export const favoriteSlice : StateCreator<favoriteSliceType> = (set) => ({
     favoritos : [],
 
     getFavoritos : ( recipe ) => { 
-        set({ 
-           
-        })
+        set((state) => ({ 
+            favoritos : [...state.favoritos , recipe ]
+        }))
     }
 })
