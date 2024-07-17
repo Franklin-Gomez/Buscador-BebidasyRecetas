@@ -1,13 +1,16 @@
 import { StateCreator } from 'zustand'
-import { CategoriesAPISchemaType , drinkType , searchdrinkType } from '../Types'
+import { CategoriesAPISchemaType , drinkType , searchdrinkType , drinkdetailType } from '../Types'
 import { fetchDrink , fetchDrinkInfo , fetchCategory } from '../API/RecipeService'
 
 export type recipeSliceType = {
     category : CategoriesAPISchemaType
     drinksInfo : searchdrinkType[]
+    recipe : drinkdetailType
+    modal : boolean
     getCategory: () => void
     getDrinks : ( drinks : drinkType) => Promise<void>
     getDrinkInfo: (id: string) => Promise<void>
+    closeModal: () => void
 }
 
 export const recipeSlice : StateCreator<recipeSliceType> = (set) => ({ 
@@ -15,6 +18,10 @@ export const recipeSlice : StateCreator<recipeSliceType> = (set) => ({
     category : [],
 
     drinksInfo : [],
+
+    recipe : {} as drinkdetailType,
+
+    modal : false,
 
     getCategory : async () => { 
 
@@ -36,7 +43,18 @@ export const recipeSlice : StateCreator<recipeSliceType> = (set) => ({
     },
 
     getDrinkInfo : async ( id ) => { 
-        await fetchDrinkInfo( id )
+        const resultado = await fetchDrinkInfo( id )
+
+        set({ 
+            recipe : resultado,
+            modal : true
+        })
+    },
+
+    closeModal : () => { 
+        set({
+            modal : false
+        })
     }
 
 })
