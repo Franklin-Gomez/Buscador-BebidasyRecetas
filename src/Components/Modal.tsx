@@ -9,6 +9,9 @@ export default function Modal() {
     const closeModal = useAppStore((state) => state.closeModal)
     const recipe = useAppStore((state) => state.recipe)
 
+    const getFavoritos = useAppStore((state) => state.getFavoritos)
+
+
     const renderIngredients = () => { 
 
         const ingredients : JSX.Element[] = []
@@ -104,6 +107,7 @@ export default function Modal() {
 
                                         <button
                                             className="p-2 w-full bg-orange-500 uppercase font-bold hover:bg-orange-700 text-white"
+                                            onClick={() =>  getFavoritos( recipe ) }
                                         >
                                             Agregar a Favoritos
                                         </button>
