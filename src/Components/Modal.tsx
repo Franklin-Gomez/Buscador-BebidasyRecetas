@@ -1,21 +1,39 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { useAppStore } from '../store/useAppStore';
+import { drinkdetailType } from '../Types';
 
 export default function Modal() {
 
     const modal = useAppStore((state) => state.modal);
     const closeModal = useAppStore((state) => state.closeModal)
-    
+    const recipe = useAppStore((state) => state.recipe)
 
-    const handleChange = () => { 
-        closeModal();
+    const renderIngredients = () => { 
+
+        const ingredients : JSX.Element[] = []
+
+        for( let i = 1 ; i <= 6 ; i++ ) { 
+
+            const Ingredientes = recipe[`strIngredient${i}` as keyof drinkdetailType]
+            const Cantidad = recipe[`strMeasure${i}`  as keyof drinkdetailType ]
+            
+            if( Ingredientes && Cantidad) { 
+                ingredients.push( 
+                    <li key={i} className=' text-lg font-normal text-black'> {Ingredientes} - {Cantidad}</li>
+                )
+            }
+
+        }
+
+        return ingredients
+
     }
-
+ 
     return (
         <>
             <Transition appear show={modal} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={ handleChange }>
+                <Dialog as="div" className="relative z-10" onClose={ closeModal }>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -46,7 +64,7 @@ export default function Modal() {
                                         as="h3" 
                                         className="text-gray-900 text-4xl font-extrabold my-5 text-center"
                                     >
-                                        Titulo Aquí
+                                        {recipe.strDrink}
                                     </Dialog.Title>
 
                                     <Dialog.Title 
@@ -54,16 +72,41 @@ export default function Modal() {
                                         className="text-gray-900 text-2xl font-extrabold my-5"
                                     >
                                         Ingredientes y Cantidades
+
+                                        {renderIngredients()}
+                                        
                                     </Dialog.Title>
 
                                     <Dialog.Title 
                                         as="h3" 
                                         className="text-gray-900 text-2xl font-extrabold my-5"
                                     >
-                                        Instrucciones
+                                        Instruciones
+                                        
+                                        <p 
+                                            className=' text-black text-lg font-normal'
+                                        > {recipe.strInstructions} </p>
+                                        
                                     </Dialog.Title>
 
+                                    <div className=' flex gap-4'>
+                                        <button
+                                            className="p-2 w-full bg-gray-500 uppercase font-bold hover:bg-gray-700 text-white"
+                                            onClick={ closeModal }
+                                        >
+                                            Cerrar Ventana
+                                        </button>
+
+                                        <button
+                                            className="p-2 w-full bg-orange-500 uppercase font-bold hover:bg-orange-700 text-white"
+                                        >
+                                            Agregar a Favoritos
+                                        </button>
+                                    </div>
+
+
                                 </Dialog.Panel>
+
                             </Transition.Child>
                         </div>
                     </div>
