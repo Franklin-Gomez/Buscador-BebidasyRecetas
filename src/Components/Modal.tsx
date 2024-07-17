@@ -107,7 +107,10 @@ export default function Modal() {
 
                                         <button
                                             className="p-2 w-full bg-orange-500 uppercase font-bold hover:bg-orange-700 text-white"
-                                            onClick={() =>  getFavoritos( recipe ) }
+                                            onClick={() =>  {
+                                                getFavoritos( recipe )
+                                                closeModal()
+                                            } }
                                         >
                                             Agregar a Favoritos
                                         </button>
