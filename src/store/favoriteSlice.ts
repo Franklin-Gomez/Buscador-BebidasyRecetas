@@ -1,12 +1,13 @@
 import { StateCreator } from "zustand"
 import { drinkdetailType } from "../Types"
+import { notificacionSliceType } from "./notificacionSlice"
 
 export type favoriteSliceType = { 
     favoritos : drinkdetailType[]
     getFavoritos : ( recipe  : drinkdetailType) => void
 }
 
-export const favoriteSlice : StateCreator<favoriteSliceType> = (set,get) => ({ 
+export const favoriteSlice : StateCreator<favoriteSliceType & notificacionSliceType , [] , [] , favoriteSliceType> = (set,get) => ({ 
     favoritos : [],
 
     getFavoritos : ( recipe ) => { 
@@ -20,13 +21,33 @@ export const favoriteSlice : StateCreator<favoriteSliceType> = (set,get) => ({
             set({
                 favoritos : get().favoritos.filter((favoritos) => favoritos.idDrink !== recipe.idDrink)
             })
+
+            get().showNotificacion({
+                text : 'Eliminado de Favoritos',
+                error : true
+            })
+
+            setTimeout(() => {
+                get().closeNotificacion()
+            }, 3000);
+
+        
             
         }   else { 
 
             // agregar pro primera vez 
             set((state) => ({ 
-                favoritos : [ ...state.favoritos , recipe ]
+                favoritos : [ ...state.favoritos , recipe ],
             }))
+
+            get().showNotificacion({
+                text : 'Guardado a Favoritos',
+                error : false
+            })
+
+            setTimeout(() => {
+                get().closeNotificacion()
+            }, 3000);
         }
 
     }
