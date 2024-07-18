@@ -5,6 +5,7 @@ import { notificacionSliceType } from "./notificacionSlice"
 export type favoriteSliceType = { 
     favoritos : drinkdetailType[]
     getFavoritos : ( recipe  : drinkdetailType) => void
+    localFromStorage : () => void
 }
 
 export const favoriteSlice : StateCreator<favoriteSliceType & notificacionSliceType , [] , [] , favoriteSliceType> = (set,get) => ({ 
@@ -30,8 +31,6 @@ export const favoriteSlice : StateCreator<favoriteSliceType & notificacionSliceT
             setTimeout(() => {
                 get().closeNotificacion()
             }, 3000);
-
-        
             
         }   else { 
 
@@ -50,5 +49,20 @@ export const favoriteSlice : StateCreator<favoriteSliceType & notificacionSliceT
             }, 3000);
         }
 
+        localStorage.setItem( 'favoritos', JSON.stringify( get().favoritos) )
+
+    },
+
+    localFromStorage : () => { 
+        const storedFavorites = localStorage.getItem('favoritos')
+
+        if( storedFavorites ) { 
+            set({ 
+                favoritos : JSON.parse( storedFavorites )
+            })
+        }
+
     }
+
+
 })

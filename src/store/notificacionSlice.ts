@@ -19,7 +19,7 @@ export const notificacionSlice : StateCreator<notificacionSliceType & favoriteSl
         text: '',
         error : false ,
         show : false ,
-    } , 
+    }, 
 
 
     showNotificacion : ( payload ) => { 
