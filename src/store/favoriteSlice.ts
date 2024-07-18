@@ -5,6 +5,7 @@ import { notificacionSliceType } from "./notificacionSlice"
 export type favoriteSliceType = { 
     favoritos : drinkdetailType[]
     getFavoritos : ( recipe  : drinkdetailType) => void
+    favoriteExists : (recipe : drinkdetailType['idDrink']) => boolean
     localFromStorage : () => void
 }
 
@@ -13,10 +14,7 @@ export const favoriteSlice : StateCreator<favoriteSliceType & notificacionSliceT
 
     getFavoritos : ( recipe ) => { 
 
-        // validamos si el elemento esta ya en arreglo de favoritos o no
-        const updateFavorite = get().favoritos.some(( favoritos ) => favoritos.idDrink == recipe.idDrink)
-
-        if( updateFavorite ) { 
+        if( get().favoriteExists( recipe.idDrink) ) { 
 
             // eliminar elementos dobles
             set({
@@ -51,6 +49,10 @@ export const favoriteSlice : StateCreator<favoriteSliceType & notificacionSliceT
 
         localStorage.setItem( 'favoritos', JSON.stringify( get().favoritos) )
 
+    },
+
+    favoriteExists : (id)  => { 
+        return get().favoritos.some(( favoritos ) => favoritos.idDrink == id )
     },
 
     localFromStorage : () => { 
