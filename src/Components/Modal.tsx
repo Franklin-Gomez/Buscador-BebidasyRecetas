@@ -10,7 +10,7 @@ export default function Modal() {
     const recipe = useAppStore((state) => state.recipe)
 
     const getFavoritos = useAppStore((state) => state.getFavoritos)
-
+    const favoritos = useAppStore((state) => state.favoritos)
 
     const renderIngredients = () => { 
 
@@ -112,7 +112,19 @@ export default function Modal() {
                                                 closeModal()
                                             } }
                                         >
-                                            Agregar a Favoritos
+                                            { 
+                                            
+                                                favoritos.length >= 1 ?
+                                                
+                                                    favoritos.map((fav) => ( 
+                                                        fav.idDrink == recipe.idDrink ? 'Eliminar de favoritos' : 'Agregar a Favoritos'
+                                                    ))
+                                                :
+
+                                                'Agregar a Favoritos'
+                                                   
+                                            }
+
                                         </button>
                                     </div>
 

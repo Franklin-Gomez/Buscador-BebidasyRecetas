@@ -3,7 +3,6 @@ import { drinkdetailType } from "../Types"
 
 export type favoriteSliceType = { 
     favoritos : drinkdetailType[]
-    
     getFavoritos : ( recipe  : drinkdetailType) => void
 }
 
